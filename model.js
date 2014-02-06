@@ -1,3 +1,5 @@
+'use strict'
+
 function join(arr){
     if (Array.isArray(arr)){
         arr = arr.join('.')

@@ -1,3 +1,4 @@
+'use strct'
 
 var file2json = require('./file2json'),
     json2file = require('./json2file'),
@@ -96,7 +97,6 @@ var versiony = (function(){
 
             this.model.set(version)
             this.initial = String(this.model)
-            console.log(String(this.model),'!')
 
             return this
         },
