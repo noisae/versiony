@@ -13,7 +13,15 @@ var arguably = require('arguably'),
 
 var file     = process.argv[2],
     versiony = require('../index.js')
-                .from(file)
+
+if (!file || !~file.indexOf('.json')){
+    // console.log('The first argument should be a json file with version')
+    // process.exit(1)
+    file = 'package.json'
+    console.log('Assuming package.json\n')
+}
+
+versiony.from(file)
 
 if (args.version){
     versiony.version(args.version)
