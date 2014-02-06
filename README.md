@@ -146,6 +146,10 @@ Sets the current patch version to have the specified value
     
 Calling major() twice does not cause the increment to be applied twice. It is only applied once. Same for minor() and patch()
 
+## newMajor
+
+Equivalent to calling major().minor(0).patch(0)
+
 ## from(file)
 
 Sets the current version. This clears any values set using major(value), minor(value) and patch(value). It does not clear increments set with (major(), minor() and patch()
@@ -154,7 +158,7 @@ Sets the current version. This clears any values set using major(value), minor(v
 
 Same as from(file), but also writes the version back to file, if previously increments have been used.
     
-Example
+Example - increment the major version
     
 ```js
     require('versiony')
