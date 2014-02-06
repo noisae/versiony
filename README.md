@@ -60,11 +60,13 @@ Set the patch version number to 4. That is, for a current version 1.0.2 will wri
 
 ```js
     versiony
-        .patch(4)
         .from('package.json')
+        .patch(4)
+        .to()
 ```
 
-Skip the source file, but use the source file version. For that version, set the major version to 1, then write this to package.json and bower.json. For version.json containing "4.5.6" the script below will write 1.5.6 to package.json and bower.json
+
+Take the version in version.json For this version, set the major version to 1, then write this to package.json and bower.json. So, fo version.json containing "4.5.6" the script below will write 1.5.6 to package.json and bower.json. If you also want to update version.json, simply add a .to() call anywhere after the major(1)
 
 ```js
     versiony
