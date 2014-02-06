@@ -1,7 +1,7 @@
 {
     "name": "versiony",
     "main": "index.js",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "homepage": "https://github.com/radubrehar/versiony",
     "authors": [
         "Radu.Brehar <radu@jslog.com>"
