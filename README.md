@@ -119,3 +119,76 @@ The flow in the above script is the following
 
 API
 ===
+
+## major()
+    
+Causes the current major version to be incremented by 1
+
+## major(value)
+
+Sets the current major version to have the specified value
+    
+## minor()
+
+Causes the current minor version to be incremented by 1
+    
+## minor(value)
+
+Sets the current minor version to have the specified value
+    
+## patch()
+
+Causes the current patch version to be incremented by 1
+    
+## patch(value)
+
+Sets the current patch version to have the specified value
+    
+Calling major() twice does not cause the increment to be applied twice. It is only applied once. Same for minor() and patch()
+
+## from(file)
+
+Sets the current version. This clears any values set using major(value), minor(value) and patch(value). It does not clear increments set with (major(), minor() and patch()
+    
+## with(file)
+
+Same as from(file), but also writes the version back to file, if previously increments have been used.
+    
+Example
+    
+```js
+    require('versiony')
+        .major()
+        .with('package.json')
+```   
+
+## to(json_file)
+
+Causes the version to be written to the specified file. If the specified json file has a "version" key, the version will be written to that key. If it has "major", "minor" and "patch" keys, the value will be written to those.
+
+## to()
+
+Writes the value to the source file (the file that was used with .from() or .with() ). If no initial file specified, it simply returns.
+
+## version(v: String/Array)
+
+Sets the current version. This clears any value set using major(value), minor(value), patch(value), as well as their incrementive forms ( major(), minor(), patch() )
+
+Example: sets version 4.0.0
+
+```js
+    versiony
+        .major()
+        .version('4.0.0')
+        .to('package.json')
+```
+is equivalent to
+```js
+    versiony
+        .version('4.0.0')
+        .to('package.json')
+```
+
+## end()
+
+Clears any version and outputs the files that have been updated. Calling it is totally optional.
