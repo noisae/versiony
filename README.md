@@ -3,6 +3,15 @@ versiony
 
 Node.js module to increment version number for your code/module
 
+Installation
+-------------
+
+```
+    npm install -g versiony
+```
+
+Global install is needed for the cli.
+
 Usage:
 -----
 
@@ -196,3 +205,26 @@ is equivalent to
 ## end()
 
 Clears any version and outputs the files that have been updated. Calling it is totally optional.
+
+
+# CLI
+
+Usage
+-----
+
+Example: increment the minor version
+```
+    versiony package.json --minor
+```
+
+The source file defaults to package.json, so you can easily skip it, if that's what you're using.
+
+Example: set the major version to 3
+```
+    versiony --major=3
+```
+
+Example: set specific version
+```
+    versiony --version=1.2.3
+```
