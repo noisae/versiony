@@ -232,3 +232,4 @@ Example: set specific version
 Example: update multiple files
 ```
     versiony --patch --to=package.json,bower.json
+```
