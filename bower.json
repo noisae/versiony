@@ -1,0 +1,21 @@
+{
+    "name": "versiony",
+    "main": "index.js",
+    "version": "0.0.1",
+    "homepage": "https://github.com/radubrehar/versiony",
+    "authors": [
+        "Radu.Brehar <radu@jslog.com>"
+    ],
+    "description": "test",
+    "keywords": [
+        "test"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

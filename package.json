@@ -1,0 +1,28 @@
+{
+    "name": "versiony",
+    "version": "0.0.1",
+    "description": "A module to increment version number for your code/module. Support for npm/bower/custom files.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/radubrehar/versiony.git"
+    },
+    "keywords": [
+        "version",
+        "manager",
+        "version",
+        "bump",
+        "package.json",
+        "version",
+        "bower",
+        "version"
+    ],
+    "author": "Radu Brehar",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/radubrehar/versiony/issues"
+    }
+}
