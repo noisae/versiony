@@ -7,7 +7,7 @@ Usage:
 -----
 
 Versiony can read code versions from json files containing either the keys "major", "minor", "patch"
-```
+```js
     {
         "major": 0,
         "minor": 1,
@@ -17,7 +17,7 @@ Versiony can read code versions from json files containing either the keys "majo
 
 or with a "version" key, just like package.json
 
-```
+```js
     {
         "name": "versiony",
         "version": "0.1.1"
@@ -27,7 +27,7 @@ or with a "version" key, just like package.json
 Example
 
 version.json
-```
+```js
     {
         "major": 0,
         "minor": 0,
@@ -36,7 +36,7 @@ version.json
 ```
 
 test.js
-```
+```js
 var versiony = require('./index')
 
 versiony
@@ -58,7 +58,7 @@ Other examples
 
 Set the patch version number to 4. That is, for a current version 1.0.2 will write 1.0.4
 
-```
+```js
     versiony
         .patch(4)
         .from('package.json')
@@ -66,7 +66,7 @@ Set the patch version number to 4. That is, for a current version 1.0.2 will wri
 
 Skip the source file, but use the source file version. For that version, set the major version to 1, then write this to package.json and bower.json. For version.json containing "4.5.6" the script below will write 1.5.6 to package.json and bower.json
 
-```
+```js
     versiony
         .from('version.json')
         .major(1)
@@ -77,12 +77,12 @@ Skip the source file, but use the source file version. For that version, set the
 
 Copy the version from one file to another
 
-```
+```js
     versiony.from('version.json').to('package.json')
 ```
 
 Release a new major version
-```
+```js
     versiony
         .from('version.json')
             .major()
