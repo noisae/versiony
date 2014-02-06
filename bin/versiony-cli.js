@@ -27,7 +27,7 @@ if (args.version){
     versiony.version(args.version)
 }
 
-['major','minor','patch'].forEach(function(name){
+;['major','minor','patch'].forEach(function(name){
 
     if (args.hasOwnProperty(name)){
         if (args[name] != null){

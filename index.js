@@ -74,7 +74,7 @@ var versiony = (function(){
         },
 
         from: function(s){
-            source = s
+            source = s || 'package.json'
 
             try {
                 sourceJson = file2json(source)
@@ -88,7 +88,7 @@ var versiony = (function(){
             var version = getVersion(sourceJson)
 
             if (!version){
-                console.warn('Version could not be detected from "' + s + '"! Please either ' +
+                console.warn('Version could not be detected from "' + source + '"! Please either ' +
                              'use a "version" key, with a semver string (eg: "1.2.3") or ' +
                              'use "major", "minor" and "patch" keys to specify each semver part separately.'
                              )
@@ -148,12 +148,13 @@ var versiony = (function(){
         end: function(){
 
             logStrip()
-            var files = this.model.files()
+            var files   = this.model.files(),
+                version = String(this.model.get())
 
             if (files.length){
 
 
-                console.log('Done. New version: ' + String(this.model.get()))
+                console.log('Done. New version: ' + version)
                 logStrip()
 
                 console.log('Files updated:\n')
@@ -171,7 +172,10 @@ var versiony = (function(){
 
             this.model.reset()
 
-
+            return {
+                version: version,
+                files  : files
+            }
 
         }
     }
