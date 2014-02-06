@@ -40,10 +40,11 @@ test.js
 var versiony = require('./index')
 
 versiony
-    .minor()                //will cause the minor version to be bumped by 1
 
+    .minor()                //will cause the minor version to be bumped by 1
     .from('version.json')   //read the version from version.json
-                            //apply the minor bumping, and write back to version.json
+    .to()                   //write the version tp the source file (package.json)
+                            //with the minor part bumped by 1
     .to('bower.json')       //apply the same version
     .to('package.json')     //apply the same version
     .end()                  //display info on the stdout about modified files
@@ -66,7 +67,7 @@ Set the patch version number to 4. That is, for a current version 1.0.2 will wri
 ```
 
 
-Take the version in version.json For this version, set the major version to 1, then write this to package.json and bower.json. So, fo version.json containing "4.5.6" the script below will write 1.5.6 to package.json and bower.json. If you also want to update version.json, simply add a .to() call anywhere after the major(1)
+Take the version in version.json. For this version, set the major version to 1, then write this to package.json and bower.json. So, for version.json containing "4.5.6" the script below will write 1.5.6 to package.json and bower.json. If you also want to update version.json, simply add a .to() call anywhere after the major(1)
 
 ```js
     versiony
@@ -96,10 +97,25 @@ Release a new major version
         .end()
 ```
 
+Which is equivalent to
+```js
+    versiony
+        .from('version.json')
+        .newMajor()
+        .to()
+        .to('bower.json')
+        .to('package.json')
+        .end()
+```
+
 The flow in the above script is the following
 
  - take the version from version.json
  - apply the modifications (increment major, set minor and patch to 0)
- - write the new version to the source file (this is really needed here since otherwise, the new version would only be written to bower.json and package.json, but on future executions, the same old version in version.json would be used.)
+ - write the new version to the source file (version.json)
  - write the new version to bower.json
  - write the new version to package.json
+
+
+API
+===

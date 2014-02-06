@@ -1,95 +1,29 @@
 
 var file2json = require('./file2json'),
-    json2file = require('./json2file')
+    json2file = require('./json2file'),
+
+    hasMajorMinorPatch = require('./hasMajorMinorPatch'),
+    hasVersion         = require('./hasVersion'),
+
+    getVersion = require('./getVersion')
 
 var versiony = (function(){
 
     var source,
         sourceJson,
-        numbers = [],
+        version2json = function(model, json){
 
-        MAJOR,
-        MAJOR_INC,
+            var value = model.get()
 
-        MINOR,
-        MINOR_INC,
-
-        PATCH,
-        PATCH_INC,
-
-        FILES = [],
-
-        asSeparate = function(json){
-            return ('major' in json) && ('minor' in json) && ('patch' in json)
-        },
-
-        asVersion = function(json){
-            return 'version' in json
-        },
-
-        getNewVersion = function(){
-            var value = numbers.slice()
-
-            !value[0] && (value[0] = 0)
-            !value[1] && (value[1] = 0)
-            !value[2] && (value[2] = 0)
-
-            if (MAJOR_INC){
-                value[0]++
-            }
-
-            if (MINOR_INC){
-                value[1]++
-            }
-
-            if (PATCH_INC){
-                value[2]++
-            }
-
-            return value.map(function(v){
-                return parseInt(v, 10)
-            })
-        },
-
-        to = function(json){
-
-            var value = getNewVersion()
-
-            if (asSeparate(json)){
+            if (hasMajorMinorPatch(json)){
                 json.major = value[0]
                 json.minor = value[1]
                 json.patch = value[2]
-            } else if (asVersion(json)){
+            } else if (hasVersion(json)){
                 json.version = value.join('.')
             }
 
             return json
-        },
-
-        getVersion = function(json){
-
-            if (typeof json == 'string'){
-                json = { version: json }
-            }
-            var v
-
-            if (asSeparate(json)){
-                v = [
-                    json.major,
-                    json.minor,
-                    json.patch
-                ]
-            } else if (asVersion(json)){
-                v = json.version.split('.')
-
-                v.length < 1 && (v[0] = 0)
-                v.length < 2 && (v[1] = 0)
-                v.length < 3 && (v[2] = 0)
-
-                v.length = 3
-            }
-
-            return v
         },
 
         logStrip = function(){
@@ -97,47 +31,48 @@ var versiony = (function(){
         }
 
     return {
-        version: function(version){
-            version += ''
-            numbers = getVersion(version)
+        model: require('./model')(),
 
-            MAJOR   = MINOR = PATCH = MAJOR_INC = MINOR_INC = PATCH_INC = undefined
+        version: function(version){
+
+            this.model.reset()
+            this.model.set(getVersion(version))
 
             return this
         },
 
+        newMajor: function(){
+            this.major()
+            this.minor(0)
+            this.patch(0)
+
+            return this
+        },
+
+        newMinor: function(){
+            return this.minor().patch(0)
+        },
+
         major: function(major){
 
-            if (arguments.length && major != null){
-                numbers[0] = major
-            } else {
-                MAJOR_INC = true
-            }
+            this.model.major.apply(this.model, arguments)
 
             return this
         },
 
         minor: function(minor){
-            if (arguments.length && minor != null){
-                numbers[1] = minor
-            } else {
-                MINOR_INC = true
-            }
+            this.model.minor.apply(this.model, arguments)
 
             return this
         },
 
         patch: function(patch){
-            if (arguments.length && patch != null){
-                numbers[2] = patch
-            } else {
-                PATCH_INC = true
-            }
+            this.model.patch.apply(this.model, arguments)
 
             return this
         },
 
-        from: function(s, config){
+        from: function(s){
             source = s
 
             try {
@@ -149,34 +84,33 @@ var versiony = (function(){
                 return this
             }
 
-            numbers    = getVersion(sourceJson)
+            var version = getVersion(sourceJson)
 
-            if (!numbers){
+            if (!version){
                 console.warn('Version could not be detected from "' + s + '"! Please either ' +
                              'use a "version" key, with a semver string (eg: "1.2.3") or ' +
                              'use "major", "minor" and "patch" keys to specify each semver part separately.'
                              )
+                return this
             }
 
-            if (!config || !config.skip){
-                this.to(s)
-            }
+            this.model.set(version)
+            console.log(String(this.model),'!')
 
             return this
         },
 
-        to: function(file){
-            if (!numbers.length){
-                console.warn('Please provide a version source file before calling "to"!')
-                return this
-            }
+        'with': function(file){
+            return this.from(file).to()
+        },
 
+        to: function(file){
             if (!file){
                 file = source
             }
 
-            if (file === source && getNewVersion().join('.') === numbers.join('.')){
-                //log skip same file, since no change detected
+            if (file == source && String(this.model.get()) == String(this.model) ){
+                //skip same file, no change detected
                 return this
             }
 
@@ -190,12 +124,15 @@ var versiony = (function(){
             }
 
             try {
-                json2file(
-                    file,
-                    to(json)
-                )
+                if (!this.model.hasFile(file)){
 
-                FILES.push(file)
+                    this.model.file(file)
+
+                    json2file(
+                        file,
+                        version2json(this.model, json)
+                    )
+                }
             } catch (ex){
                 console.log('\nCould not write version to "' + file + '". Skipping. \n')
             }
@@ -204,21 +141,25 @@ var versiony = (function(){
         },
 
         end: function(){
-            logStrip()
-            console.log('Done. New version: ' + getNewVersion().join('.'))
 
             logStrip()
+            console.log('Done. New version: ' + String(this.model.get()))
+            logStrip()
 
-            if (FILES.length){
+            var files = this.model.files()
+
+            if (files.length){
 
                 console.log('Files updated:\n')
 
-                FILES.forEach(function(f){
+                files.forEach(function(f){
                     console.log(f)
                 })
             } else {
                 console.log('No file updated.')
             }
+
+            this.model.reset()
 
             logStrip()
 
