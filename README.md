@@ -43,7 +43,7 @@ versiony
 
     .minor()                //will cause the minor version to be bumped by 1
     .from('version.json')   //read the version from version.json
-    .to()                   //write the version tp the source file (package.json)
+    .to()                   //write the version to the source file (package.json)
                             //with the minor part bumped by 1
     .to('bower.json')       //apply the same version
     .to('package.json')     //apply the same version
@@ -52,7 +52,7 @@ versiony
 
 The above code will cause the version 0.1.1 to be written to all 3 files, if all are found.
 
-In the case ```versiony``` does not find a file that is specified in the to() call, it just skips it.
+In the case ```versiony``` does not find a file that is specified in the ```to()``` call, it just skips it.
 
 Other examples
 ------------
@@ -119,3 +119,6 @@ The flow in the above script is the following
 
 API
 ===
+
+```.from```
+

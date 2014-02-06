@@ -95,6 +95,7 @@ var versiony = (function(){
             }
 
             this.model.set(version)
+            this.initial = String(this.model)
             console.log(String(this.model),'!')
 
             return this
@@ -109,8 +110,12 @@ var versiony = (function(){
                 file = source
             }
 
-            if (file == source && String(this.model.get()) == String(this.model) ){
+            if (file == source && String(this.model.get()) == this.initial ){
                 //skip same file, no change detected
+                return this
+            }
+
+            if (!file){
                 return this
             }
 
@@ -143,25 +148,30 @@ var versiony = (function(){
         end: function(){
 
             logStrip()
-            console.log('Done. New version: ' + String(this.model.get()))
-            logStrip()
-
             var files = this.model.files()
 
             if (files.length){
+
+
+                console.log('Done. New version: ' + String(this.model.get()))
+                logStrip()
 
                 console.log('Files updated:\n')
 
                 files.forEach(function(f){
                     console.log(f)
                 })
+
+
             } else {
                 console.log('No file updated.')
             }
 
+            logStrip()
+
             this.model.reset()
 
-            logStrip()
+
 
         }
     }
