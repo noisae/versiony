@@ -245,7 +245,7 @@ Example: increment the minor version
 
 The source file defaults to package.json, so you can easily skip it, if that's what you're using.
 
-Example: set the major version to 3
+Example: set the major version to 3 (in package.json)
 ```
     versiony --major=3
 ```
@@ -258,4 +258,14 @@ Example: set specific version
 Example: update multiple files
 ```
     versiony --patch --to=package.json,bower.json
+```
+
+Example: release new major update (bumps major and sets minor and patch to 0)
+```
+    versiony --newmajor
+```
+
+Example: release new minor update (bumps minor and sets patch to 0)
+```
+    versiony --newminor
 ```

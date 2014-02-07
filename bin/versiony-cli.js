@@ -5,7 +5,9 @@
 var arguably = require('arguably'),
     args     = arguably
                 .option('--major')
+                .option('--newmajor')
                 .option('--minor')
+                .option('--newminor')
                 .option('--patch')
                 .option('--version')
                 .option('--to')
@@ -34,8 +36,14 @@ if (args.version){
             versiony[name]()
         }
     }
-
 })
+
+if (args.hasOwnProperty('newmajor')){
+    versiony.newMajor()
+}
+if (args.hasOwnProperty('newminor')){
+    versiony.newMinor()
+}
 
 versiony.to()
 
