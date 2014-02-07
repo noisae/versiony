@@ -1,6 +1,10 @@
-var versiony = require('./index')
+var versiony = require('./v')
 
 versiony
-    .from('version.json')
+    .from('package.json')
+    .major()
     .to('package.json')
-    .end()
+
+var r = versiony.get()
+
+console.log(r)
