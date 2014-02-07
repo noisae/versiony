@@ -9,14 +9,12 @@ var arguably = require('arguably'),
                 .option('--patch')
                 .option('--version')
                 .option('--to')
-                .done()
+                .parse()
 
 var file     = process.argv[2],
-    versiony = require('../index.js')
+    versiony = require('../v.js')
 
 if (!file || !~file.indexOf('.json')){
-    // console.log('The first argument should be a json file with version')
-    // process.exit(1)
     file = 'package.json'
     console.log('Assuming package.json\n')
 }
@@ -27,7 +25,7 @@ if (args.version){
     versiony.version(args.version)
 }
 
-;['major','minor','patch'].forEach(function(name){
+;['major', 'minor', 'patch'].forEach(function(name){
 
     if (args.hasOwnProperty(name)){
         if (args[name] != null){

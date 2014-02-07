@@ -129,6 +129,9 @@ The flow in the above script is the following
 API
 ===
 
+Each of the methods below, except ```get``` and ```end``` return the versiony object.
+
+
 ## major()
 
 Causes the current major version to be incremented by 1
@@ -204,8 +207,31 @@ is equivalent to
 
 ## end()
 
-Clears any version and outputs the files that have been updated. Calling it is totally optional.
+Clears any version and outputs the files that have been updated. Calling it is totally optional. Returns an object with info about the version and the changed files
 
+```js
+    versiony.
+        version('4.5.6')
+        .major()
+        .to('package.json')
+
+    var info = versiony.end()
+    console.log(info.version)
+    console.log(info.files)
+```
+
+### get()
+
+Returns the current version.
+
+```js
+    var v = versiony
+                .versopm('1.0.0')
+                .patch()
+                .get()
+
+    console.log(v)  // '1.0.1'
+```
 
 # CLI
 
