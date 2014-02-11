@@ -11,7 +11,7 @@ var arguably = require('arguably'),
                 .option('--patch')
                 .option('--version')
                 .option('--to')
-                .parse()
+                .done()
 
 var file     = process.argv[2],
     versiony = require('../v.js')
