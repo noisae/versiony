@@ -7,10 +7,14 @@ Installation
 -------------
 
 ```
-    npm install -g versiony
+    npm install versiony
 ```
 
-Global install is needed for the cli.
+If you want to use the CLI, install
+
+```
+    npm install -g versiony-cli
+```
 
 Usage:
 -----
@@ -237,6 +241,11 @@ Returns the current version.
 
 Usage
 -----
+
+Install with
+```
+    npm install -g versiony-cli
+```
 
 Example: increment the minor version
 ```

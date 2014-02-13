@@ -26,6 +26,5 @@
         "url": "https://github.com/radubrehar/versiony/issues"
     },
     "dependencies": {
-        "arguably": "~0.1.6"
     }
 }
