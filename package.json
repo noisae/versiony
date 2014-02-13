@@ -11,16 +11,13 @@
         "type": "git",
         "url": "git://github.com/radubrehar/versiony.git"
     },
-    "bin": {
-        "versiony": "./bin/versiony-cli.js"
-    },
     "keywords": [
         "version",
         "manager",
-        "version",
+        "version manager",
         "bump",
         "package.json",
-        "version",
+        "bower version",
         "bower",
         "version"
     ],
