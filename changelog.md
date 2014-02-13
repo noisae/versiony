@@ -1,3 +1,8 @@
+1.2.4
+=====
+
+ - remove package.json preferGlobal
+
 1.2.2
 =====
 
