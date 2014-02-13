@@ -1,4 +1,4 @@
-'use strct'
+'use strict'
 
 var file2json = require('./file2json'),
     json2file = require('./json2file'),
