@@ -3,7 +3,6 @@
     "version": "1.2.2",
     "description": "A module to increment version number for your code/module. Support for npm/bower/custom files.",
     "main": "v.js",
-    "preferGlobal": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
