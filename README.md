@@ -230,7 +230,7 @@ Returns the current version.
 
 ```js
     var v = versiony
-                .versopm('1.0.0')
+                .version('1.0.0')
                 .patch()
                 .get()
 
