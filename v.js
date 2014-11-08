@@ -29,7 +29,9 @@ var versiony = (function(){
 
         logStrip = function(){
             console.log('---------------------------------------------')
-        }
+        },
+
+        indent = '    '
 
     return {
         model: require('./model')(),
@@ -38,6 +40,12 @@ var versiony = (function(){
 
             this.model.reset()
             this.model.set(getVersion(version))
+
+            return this
+        },
+
+        indent: function(newIndent){
+            indent = newIndent
 
             return this
         },
@@ -135,7 +143,8 @@ var versiony = (function(){
 
                     json2file(
                         file,
-                        version2json(this.model, json)
+                        version2json(this.model, json),
+                        indent
                     )
                 }
             } catch (ex){
