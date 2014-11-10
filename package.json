@@ -1,29 +1,29 @@
 {
-    "name": "versiony",
-    "version": "1.2.6",
-    "description": "A module to increment version number for your code/module. Support for npm/bower/custom files.",
-    "main": "v.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/radubrehar/versiony.git"
-    },
-    "keywords": [
-        "version",
-        "manager",
-        "version manager",
-        "bump",
-        "package.json",
-        "bower version",
-        "bower",
-        "version"
-    ],
-    "author": "Radu Brehar",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/radubrehar/versiony/issues"
-    },
-    "dependencies": {}
+  "name": "versiony",
+  "version": "1.3.0",
+  "description": "A module to increment version number for your code/module. Support for npm/bower/custom files.",
+  "main": "v.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/radubrehar/versiony.git"
+  },
+  "keywords": [
+    "version",
+    "manager",
+    "version manager",
+    "bump",
+    "package.json",
+    "bower version",
+    "bower",
+    "version"
+  ],
+  "author": "Radu Brehar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/radubrehar/versiony/issues"
+  },
+  "dependencies": {}
 }
