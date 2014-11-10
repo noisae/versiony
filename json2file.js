@@ -1,10 +1,9 @@
 var FS = require('fs')
 
 module.exports = function(file, contents, indent){
-    var contents,
-        data
+    var data
 
-    if (typeof indent === 'undefined' || indent === null) {
+    if (indent == null) {
         indent = '    '
     }
 
