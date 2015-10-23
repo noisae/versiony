@@ -4,7 +4,7 @@
   "description": "A module to increment version number for your code/module. Support for npm/bower/custom files.",
   "main": "v.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive './test/**/*.test.js'"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/radubrehar/versiony/issues"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.1.0",
+    "sinon": "^1.17.2"
+  }
 }

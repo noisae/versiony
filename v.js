@@ -6,7 +6,10 @@ var file2json = require('./file2json'),
     hasMajorMinorPatch = require('./hasMajorMinorPatch'),
     hasVersion         = require('./hasVersion'),
 
-    getVersion = require('./getVersion')
+    getVersion = require('./getVersion'),
+    CommandEnd = require('./Command/End'),
+    CommandTo = require('./Command/To'),
+    CommandFrom = require('./Command/From');
 
 var versiony = (function(){
 
@@ -82,31 +85,17 @@ var versiony = (function(){
         },
 
         from: function(s){
-            source = s || 'package.json'
 
-            try {
-                sourceJson = file2json(source)
-            } catch (ex){
-                console.log('Could not read source file "' + source + '"! ')
-                console.log(ex)
+            source = s || 'package.json';
 
-                return this
-            }
+            var commandFrom = new CommandFrom(
+                source, 
+                file2json, 
+                getVersion, 
+                this
+            );
 
-            var version = getVersion(sourceJson)
-
-            if (!version){
-                console.warn('Version could not be detected from "' + source + '"! Please either ' +
-                             'use a "version" key, with a semver string (eg: "1.2.3") or ' +
-                             'use "major", "minor" and "patch" keys to specify each semver part separately.'
-                             )
-                return this
-            }
-
-            this.model.set(version)
-            this.initial = String(this.model)
-
-            return this
+            return commandFrom.execute();
         },
 
         'with': function(file){
@@ -114,44 +103,19 @@ var versiony = (function(){
         },
 
         to: function(file){
-            if (!file){
-                file = source
-            }
+            
+            var commandTo = new CommandTo(
+                this.model, 
+                this.initial, 
+                file2json, 
+                json2file, 
+                version2json, 
+                source, 
+                indent
+            );
 
-            if (file == source && String(this.model.get()) == this.initial ){
-                //skip same file, no change detected
-                return this
-            }
-
-            if (!file){
-                return this
-            }
-
-            var json
-
-            try {
-                json = file2json(file)
-            } catch (ex){
-                console.log('\nNo file found at "'+ file + '". Skipping. \n')
-                return this
-            }
-
-            try {
-                if (!this.model.hasFile(file)){
-
-                    this.model.file(file)
-
-                    json2file(
-                        file,
-                        version2json(this.model, json),
-                        indent
-                    )
-                }
-            } catch (ex){
-                console.log('\nCould not write version to "' + file + '". Skipping. \n')
-            }
-
-            return this
+            commandTo.execute(file);
+            return this;
         },
 
         getVersion: function(){
@@ -164,37 +128,9 @@ var versiony = (function(){
 
         end: function(){
 
-            logStrip()
-
-            var files   = this.model.files().slice(),
-                version = String(this.model.get())
-
-            if (files.length){
-
-                console.log('Done. New version: ' + version)
-
-                logStrip()
-
-                console.log('Files updated:\n')
-
-                files.forEach(function(f){
-                    console.log(f)
-                })
-
-
-            } else {
-                console.log('No file updated.')
-            }
-
-            logStrip()
-
-            this.model.reset()
-
-            return {
-                version: version,
-                files  : files
-            }
-
+            var commandEnd = new CommandEnd(logStrip, this);
+            commandEnd.execute();
+            
         }
     }
 })()
